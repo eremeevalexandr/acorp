@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Список ваших заявок</h1>
+  {% if tickets %}
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Заголовок</th>
+          <th>Статус</th>
+          <th>Дата создания</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for ticket in tickets %}
+          <tr>
+            <td><a href="{% url 'helpdesk:view_ticket' ticket.id %}">{{ ticket.id }}</a></td>
+            <td>{{ ticket.title }}</td>
+            <td>{{ ticket.get_status_display }}</td>
+            <td>{{ ticket.created_at }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>У вас еще нет заявок.</p>
+  {% endif %}
+  <p><a href="{% url 'helpdesk:create_ticket' %}">Создать новую заявку</a></p>
+{% endblock %}

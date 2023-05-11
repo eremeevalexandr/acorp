@@ -1,0 +1,133 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+}
+
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 200px;
+  background-color: #333;
+  color: #fff;
+}
+
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav li {
+  padding: 10px;
+}
+
+nav li a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.container {
+  margin-left: 200px;
+  padding: 20px;
+}
+
+/* Index Page */
+.ticket-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.ticket {
+  width: 30%;
+  margin-bottom: 30px;
+  background-color: #f2f2f2;
+  padding: 10px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.ticket h2 {
+  margin-top: 0;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.ticket .meta {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.ticket .meta span {
+  color: #888;
+}
+
+.ticket .description {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* Create Ticket Page */
+form {
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+  margin: auto;
+  padding: 20px;
+  background-color: #f2f2f2;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+form label {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+form input[type="text"],
+form textarea {
+  padding: 10px;
+  margin-bottom: 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+}
+
+form textarea {
+  height: 150px;
+}
+
+form input[type="submit"] {
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+form input[type="submit"]:hover {
+  background-color: #555;
+}
+
+/* View Ticket Page */
+.ticket-details {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+  background-color: #f2f2f2;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.ticket-details h1 {
+  font-size: 32px;
+  font-weight: bold;
+  margin-top: 0;
+}
+

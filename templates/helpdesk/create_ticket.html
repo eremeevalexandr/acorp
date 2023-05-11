@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Создать новую заявку</h1>
+  <form method="POST">
+    {% csrf_token %}
+    <div>
+      <label for="title">Заголовок:</label>
+      <input type="text" name="title" id="title" required>
+    </div>
+    <div>
+      <label for="description">Описание:</label>
+      <textarea name="description" id="description" required></textarea>
+    </div>
+    <button type="submit">Отправить</button>
+  </form>
+{% endblock %}
