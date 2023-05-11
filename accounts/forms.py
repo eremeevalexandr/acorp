@@ -1,23 +1,19 @@
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
-from django.forms import forms
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django import forms
+from .models import CustomUser
 
 
-class RegistrationForm(UserCreationForm):
-    email = forms.EmailField(required=True)
+class CustomUserCreationForm(UserCreationForm):
+    phone_number = forms.CharField(required=True)
+    first_name = forms.CharField(required=True)
+    last_name = forms.CharField(required=True)
 
     class Meta:
-        model = User
-        fields = (
-            'username',
-            'email',
-            'password1',
-            'password2'
-        )
+        model = CustomUser
+        fields = ['username', 'email', 'password1', 'password2', 'phone_number', 'first_name', 'last_name']
 
-    def save(self, commit=True):
-        user = super(RegistrationForm, self).save(commit=False)
-        user.email = self.cleaned_data['email']
-        if commit:
-            user.save()
-        return user
+
+class CustomAuthenticationForm(AuthenticationForm):
+    class Meta:
+        model = CustomUser
+        fields = ['username', 'password']

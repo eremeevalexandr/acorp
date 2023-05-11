@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+from accounts.models import CustomUser
+
 
 class Ticket(models.Model):
     """Модель для заявки"""
@@ -10,7 +12,7 @@ class Ticket(models.Model):
         RESOLVED = 'Resolved', 'Решена'
         CLOSED = 'Closed', 'Закрыта'
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='пользователь')
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, verbose_name='пользователь')
     title = models.CharField('тема', max_length=200)
     description = models.TextField('описание')
     created_at = models.DateTimeField('дата создания', auto_now_add=True)
