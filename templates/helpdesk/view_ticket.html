@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1>{{ ticket.title }}</h1>
-  <p><strong>Статус:</strong> {{ ticket.get_status_display }}</p>
-  <p><strong>Описание:</strong></p>
-  <p>{{ ticket.description }}</p>
-  <p><strong>Дата создания:</strong> {{ ticket.created_at }}</p>
-  <p><a href="{% url 'helpdesk:index' %}">Вернуться к списку заявок</a></p>
+    <h1>{{ ticket.title }}</h1>
+    <p><strong>Статус:</strong> {{ ticket.get_status_display }}</p>
+    <p><strong>Описание:</strong></p>
+    <p>{{ ticket.description }}</p>
+    <p><strong>Дата создания:</strong> {{ ticket.created_at }}</p>
+    <p><strong>Дата обновления:</strong> {{ ticket.updated_at }}</p>
+    <p><a href="{% url 'helpdesk:index' %}">Вернуться к списку заявок</a></p>
 {% endblock %}
