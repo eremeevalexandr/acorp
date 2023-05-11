@@ -4,6 +4,10 @@
     <h2>Регистрация</h2>
     <form method="post">
         {% csrf_token %}
+        <div class="form-group" hidden>
+            <label for="id_username">Имя пользователя</label>
+            <input type="text" name="username" class="form-control" id="id_username" required>
+        </div>
         <div class="form-group">
             <label for="id_first_name">Имя</label>
             <input type="text" name="first_name" class="form-control" id="id_first_name" required>
@@ -21,13 +25,19 @@
             <input type="text" name="phone_number" class="form-control" id="id_phone_number" required>
         </div>
         <div class="form-group">
-            <label for="id_password">Пароль</label>
-            <input type="password" name="password" class="form-control" id="id_password" required>
+            <label for="id_password1">Пароль</label>
+            <input type="password" name="password1" class="form-control" id="id_password1" required>
         </div>
         <div class="form-group">
-            <label for="id_confirm_password">Подтвердите пароль</label>
-            <input type="password" name="confirm_password" class="form-control" id="id_confirm_password" required>
+            <label for="id_password2">Подтвердите пароль</label>
+            <input type="password" name="password2" class="form-control" id="id_password2" required>
         </div>
         <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
     </form>
+    <script>
+        document.querySelector('#id_email').addEventListener('change', function () {
+            document.querySelector('#id_username').value = this.value;
+        });
+    </script>
+
 {% endblock %}

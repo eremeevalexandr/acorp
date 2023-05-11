@@ -6,6 +6,7 @@ from .forms import CustomUserCreationForm, CustomAuthenticationForm
 def register(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
+        print(form.errors)
         if form.is_valid():
             user = form.save(commit=False)
             user.username = form.cleaned_data.get('email')
