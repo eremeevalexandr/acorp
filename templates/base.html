@@ -10,13 +10,14 @@
     <ul>
         {% if user.is_authenticated %}
             <li><a href="{% url 'accounts:logout' %}">Выход</a></li>
+            <li><a href="{% url 'helpdesk:index' %}">Заявки</a></li>
+            <li><a href="{% url 'helpdesk:create_ticket' %}">Создать заявку</a></li>
         {% else %}
             <li><a href="{% url 'accounts:login' %}">Вход</a></li>
             <li><a href="{% url 'accounts:registration' %}">Регистрация</a></li>
         {% endif %}
 
-        <li><a href="{% url 'helpdesk:index' %}">Заявки</a></li>
-        <li><a href="{% url 'helpdesk:create_ticket' %}">Создать заявку</a></li>
+
     </ul>
 </nav>
 <div class="container">

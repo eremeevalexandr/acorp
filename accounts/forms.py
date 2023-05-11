@@ -7,6 +7,14 @@ class CustomUserCreationForm(UserCreationForm):
     phone_number = forms.CharField(required=True)
     first_name = forms.CharField(required=True)
     last_name = forms.CharField(required=True)
+    email = forms.EmailField(required=True)
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.email = user.username
+        if commit:
+            user.save()
+        return user
 
     class Meta:
         model = CustomUser
