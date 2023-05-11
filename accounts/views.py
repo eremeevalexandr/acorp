@@ -24,7 +24,7 @@ def login_view(request):
     if request.method == 'POST':
         form = CustomAuthenticationForm(data=request.POST)
         if form.is_valid():
-            email = form.cleaned_data.get('username')
+            email = form.cleaned_data.get('email')
             password = form.cleaned_data.get('password')
             user = authenticate(username=email, password=password)
             if user is not None:
@@ -32,4 +32,5 @@ def login_view(request):
                 return redirect('helpdesk:index')
     else:
         form = CustomAuthenticationForm()
+    print(form.errors)
     return render(request, 'accounts/login.html', {'form': form})

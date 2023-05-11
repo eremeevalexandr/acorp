@@ -1,17 +1,26 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h2>Вход</h2>
-  <form method="post">
-    {% csrf_token %}
-    <div class="form-group">
-      <label for="id_username">Пользователь</label>
-      <input type="text" name="username" class="form-control" id="id_username" required>
-    </div>
-    <div class="form-group">
-      <label for="id_password">Пароль</label>
-      <input type="password" name="password" class="form-control" id="id_password" required>
-    </div>
-    <button type="submit" class="btn btn-primary">Войти</button>
-  </form>
+    <h2>Вход</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group" hidden>
+            <label for="id_username">Имя пользователя</label>
+            <input type="text" name="username" class="form-control" id="id_username" required>
+        </div>
+        <div class="form-group">
+            <label for="id_email">Email</label>
+            <input type="email" name="email" class="form-control" id="id_email" required>
+        </div>
+        <div class="form-group">
+            <label for="id_password">Пароль</label>
+            <input type="password" name="password" class="form-control" id="id_password" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Войти</button>
+    </form>
+    <script>
+        document.querySelector('#id_email').addEventListener('change', function () {
+            document.querySelector('#id_username').value = this.value;
+        });
+    </script>
 {% endblock %}
