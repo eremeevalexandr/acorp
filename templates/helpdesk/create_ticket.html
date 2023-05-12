@@ -4,11 +4,11 @@
   <h1>Создать новую заявку</h1>
   <form method="POST">
     {% csrf_token %}
-    <div>
+    <div class="create_ticket_title">
       <label for="title">Заголовок:</label>
       <input type="text" name="title" id="title" required>
     </div>
-    <div>
+    <div class="create_ticket_description">
       <label for="description">Описание:</label>
       <textarea name="description" id="description" required></textarea>
     </div>
