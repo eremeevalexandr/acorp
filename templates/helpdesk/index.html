@@ -18,7 +18,7 @@
                     <td><a href="{% url 'helpdesk:view_ticket' ticket.id %}">{{ ticket.title }}</a></td>
                     <td>{{ ticket.get_status_display }}</td>
                     <td>{{ ticket.created_at }}</td>
-                    <td>{{ ticket.deadline }}</td>
+                    <td>{{ ticket.deadline|default:"не назначена" }}</td>
                 </tr>
             {% endfor %}
             </tbody>
