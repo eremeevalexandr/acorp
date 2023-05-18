@@ -20,7 +20,8 @@ class Ticket(models.Model):
     status = models.CharField(
         max_length=20,
         choices=Status.choices,
-        default=Status.OPEN
+        default=Status.OPEN,
+        verbose_name='статус'
     )
     deadline = models.DateField('планируемая дата исполнения', null=True, blank=True)
 
