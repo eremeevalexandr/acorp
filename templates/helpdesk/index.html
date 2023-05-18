@@ -10,6 +10,9 @@
                 <th>Статус</th>
                 <th>Дата создания</th>
                 <th>Планируемая дата исполнения</th>
+                {% if user.groups.filter %}
+                    <th>Пользователь</th>
+                {% endif %}
             </tr>
             </thead>
             <tbody>
@@ -19,6 +22,9 @@
                     <td>{{ ticket.get_status_display }}</td>
                     <td>{{ ticket.created_at }}</td>
                     <td>{{ ticket.deadline|default:"не назначена" }}</td>
+                    {% if user.groups.filter %}
+                        <td>{{ ticket.user.last_name }} {{ ticket.user.first_name}}</td>
+                    {% endif %}
                 </tr>
             {% endfor %}
             </tbody>
