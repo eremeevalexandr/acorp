@@ -6,9 +6,15 @@ from .models import Ticket
 # Выводит список заявок пользователя, которые отсортированы по дате создания в обратном порядке
 @login_required
 def index(request):
-    tickets = Ticket.objects \
-        .filter(user=request.user).order_by('-created_at') \
-        .exclude(status='Closed')
+    # tickets = Ticket.objects \
+    #     .filter(user=request.user).order_by('-created_at') \
+    #     .exclude(status='Closed')
+    if request.user.groups.filter(name='HelpDesk').exists():
+        tickets = Ticket.objects.exclude(status="Closed")
+    else:
+        tickets = Ticket.objects \
+            .filter(user=request.user).order_by('-created_at') \
+            .exclude(status='Closed')
     return render(request, 'helpdesk/index.html', {'tickets': tickets})
 
 
