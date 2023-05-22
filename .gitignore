@@ -3,3 +3,4 @@
 /accounts/migrations/
 /config_app/
 /helpdesk/.idea/
+.gitignore
