@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .models import Ticket
+from .forms import CommentForm
 
 
 # Выводит список заявок пользователя, которые отсортированы по дате создания в обратном порядке
@@ -38,7 +39,17 @@ def create_ticket(request):
 @login_required
 def view_ticket(request, ticket_id):
     ticket = get_object_or_404(Ticket, id=ticket_id)
-    return render(request, 'helpdesk/view_ticket.html', {'ticket': ticket})
+    comments = ticket.comments.all()
 
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.ticket = ticket
+            comment.user = request.user
+            comment.save()
+            form = CommentForm()    # Очистить форму после сохранения комментария
+    else:
+        form = CommentForm()
 
-
+    return render(request, 'helpdesk/view_ticket.html', {'ticket': ticket, 'comments': comments, 'form': form})

@@ -8,4 +8,21 @@
     <p><strong>Дата создания:</strong> {{ ticket.created_at }}</p>
     <p><strong>Дата обновления:</strong> {{ ticket.updated_at }}</p>
     <p><a href="{% url 'helpdesk:index' %}">Вернуться к списку заявок</a></p>
+    <h2>Комментарии:</h2>
+    {% for comment in comments %}
+        <div>
+            <p>Автор: {{ comment.user }}</p>
+            <p>Дата: {{ comment.created_at }}</p>
+            <p>{{ comment.content }}</p>
+        </div>
+    {% empty %}
+        <p>Нет комментариев.</p>
+    {% endfor %}
+
+    <h2>Добавить комментарий:</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Добавить</button>
+    </form>
 {% endblock %}
