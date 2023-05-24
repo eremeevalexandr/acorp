@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, PageNotAnInteger
 from .models import Ticket
 from .forms import CommentForm
 
@@ -7,16 +8,36 @@ from .forms import CommentForm
 # Выводит список заявок пользователя, которые отсортированы по дате создания в обратном порядке
 @login_required
 def index(request):
-    # tickets = Ticket.objects \
-    #     .filter(user=request.user).order_by('-created_at') \
-    #     .exclude(status='Closed')
+    # Выводим все заявки для группы HelpDesk, исключаем заявки со статусом "Закрыто"
     if request.user.groups.filter(name='HelpDesk').exists():
         tickets = Ticket.objects.exclude(status="Closed")
     else:
+        # Все кроме группы HelpDesk видят СВОИ заявки, по дате создания, исключаем заявки со статусом "Закрыто"
         tickets = Ticket.objects \
             .filter(user=request.user).order_by('-created_at') \
             .exclude(status='Closed')
-    return render(request, 'helpdesk/index.html', {'tickets': tickets})
+
+    # Получаем количество записей на странице
+    count = int(request.GET.get('count', 10))
+    paginator = Paginator(tickets, count)   # Создаем экземпляр Paginator с выбранным количеством заявок на странице
+    page_number = request.GET.get('page', 1)    # Получаем номер текущей страницы из запроса пользователя
+    try:
+        page = paginator.get_page(page_number)
+    except PageNotAnInteger:
+        page = paginator.get_page(1)
+
+    # Проверка статуса заявки и определение доступности кнопок "Завершить" и "Вернуть в работу"
+    for ticket in tickets:
+        ticket.can_complete = False
+        ticket.can_reopen = False
+
+        if ticket.status == Ticket.Status.RESOLVED:
+            ticket.can_complete = True
+            ticket.can_reopen = True
+        elif ticket.status == Ticket.Status.CLOSED:
+            ticket.can_reopen = True
+
+    return render(request, 'helpdesk/index.html', {'page': page, 'count': count, 'tickets': tickets})
 
 
 # Обрабатывает запрос на создание новой заявки. Если запрос был отправлен методом POST, мы создаем новую заявку на
@@ -53,3 +74,21 @@ def view_ticket(request, ticket_id):
         form = CommentForm()
 
     return render(request, 'helpdesk/view_ticket.html', {'ticket': ticket, 'comments': comments, 'form': form})
+
+
+@login_required
+def complete_ticket(request, ticket_id):
+    ticket = get_object_or_404(Ticket, id=ticket_id)
+    # Логика для завершения заявки
+    ticket.status = Ticket.Status.CLOSED
+    ticket.save()
+    return redirect('helpdesk:index')
+
+
+@login_required
+def reopen_ticket(request, ticket_id):
+    ticket = get_object_or_404(Ticket, id=ticket_id)
+    # Логика для возврата в работу заявки
+    ticket.status = Ticket.Status.IN_PROGRESS
+    ticket.save()
+    return redirect('helpdesk:index')
