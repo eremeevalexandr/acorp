@@ -13,6 +13,7 @@
                 {% if user.groups.filter %}
                     <th>Пользователь</th>
                 {% endif %}
+                <th>Исполнение</th>
             </tr>
             </thead>
             <tbody>
@@ -23,8 +24,22 @@
                     <td>{{ ticket.created_at }}</td>
                     <td>{{ ticket.deadline|default:"не назначена" }}</td>
                     {% if user.groups.filter %}
-                        <td>{{ ticket.user.last_name }} {{ ticket.user.first_name}}</td>
+                        <td>{{ ticket.user.last_name }} {{ ticket.user.first_name }}</td>
                     {% endif %}
+                    <td>
+                        {% if ticket.can_complete %}
+                            <form method="post" action="{% url 'helpdesk:complete_ticket' ticket.id %}">
+                                {% csrf_token %}
+                                <button type="submit">Завершить</button>
+                            </form>
+                        {% endif %}
+                        {% if ticket.can_reopen %}
+                            <form method="post" action="{% url 'helpdesk:reopen_ticket' ticket.id %}">
+                                {% csrf_token %}
+                                <button type="submit">Вернуть в работу</button>
+                            </form>
+                        {% endif %}
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>
