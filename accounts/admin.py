@@ -5,7 +5,8 @@ from .models import CustomUser
 
 @admin.register(CustomUser)
 class CustomUserAdmin(admin.ModelAdmin):
-    list_display = ['last_name', 'first_name', 'phone_number', 'username', 'get_staff_status']
+    list_display = ['username', 'last_name', 'first_name', 'phone_number', 'get_staff_status']
+    search_fields = ['username', 'last_name', 'first_name', 'phone_number']
 
     def get_staff_status(self, obj):
         if obj.is_staff:
