@@ -1,26 +1,32 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
-    <title>{% block title %}Хелпдеск{% endblock %}</title>
+    <meta charset="UTF-8">
+{#    <meta http-equiv="refresh" content="30">#}
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %}HelpDesk{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'acorp/style.css' %}">
+{% block head %}
+{% endblock %}
 </head>
 <body>
-    <nav class="sidebar">
-        <ul>
-            {% if user.is_authenticated %}
-                <li><a href="{% url 'accounts:logout' %}">Выход</a></li>
-                <li><a href="{% url 'helpdesk:index' %}">Заявки</a></li>
-                <li><a href="{% url 'helpdesk:create_ticket' %}">Создать заявку</a></li>
-            {% else %}
-                <li><a href="{% url 'accounts:login' %}">Вход</a></li>
-                <li><a href="{% url 'accounts:registration' %}">Регистрация</a></li>
-            {% endif %}
-        </ul>
-    </nav>
-    <div class="main-content">
-        {% block content %}
-        {% endblock %}
-    </div>
+<nav class="sidebar">
+    <ul>
+        <p><i>Добро пожаловать<br/>{{ user.first_name }}</i></p>
+        {% if user.is_authenticated %}
+            <li><a href="{% url 'accounts:logout' %}">Выход</a></li>
+            <li><a href="{% url 'helpdesk:index' %}">Заявки</a></li>
+            <li><a href="{% url 'helpdesk:create_ticket' %}">Создать заявку</a></li>
+        {% else %}
+            <li><a href="{% url 'accounts:login' %}">Вход</a></li>
+            <li><a href="{% url 'accounts:registration' %}">Регистрация</a></li>
+        {% endif %}
+    </ul>
+</nav>
+<div class="main-content">
+    {% block content %}
+    {% endblock %}
+</div>
 </body>
 </html>
