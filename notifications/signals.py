@@ -15,7 +15,8 @@ def send_ticket_notification(sender, instance, created, **kwargs):
     else:
         notification_type = 'заявка изменена'
 
-    recipient_email = instance.user.email
+    recipient_email = [instance.user.email]  # Передаем email как список с одним элементом
+    recipient_list = recipient_email + POST_MAIL  # Объединяем recipient_email и POST_MAIL
     subject = f'Уведомление о заявке #{instance.id}'
     html_message = render_to_string('notifications/ticket_notification.html',
                                     {
@@ -28,7 +29,7 @@ def send_ticket_notification(sender, instance, created, **kwargs):
         subject,
         plain_message,
         settings.DEFAULT_FROM_EMAIL,
-        [recipient_email, POST_MAIL],
+        recipient_list,
         html_message=html_message
     )
 
@@ -37,7 +38,8 @@ def send_ticket_notification(sender, instance, created, **kwargs):
 def send_comment_notification(sender, instance, created, **kwargs):
     if created:
         ticket = instance.ticket
-        recipient_email = ticket.user.email
+        recipient_email = [ticket.user.email]   # Передаем email как список с одним элементом
+        recipient_list = recipient_email + POST_MAIL    # Объединяем recipient_email и POST_MAIL
         subject = f'Уведомление о комментарии к заявке #{ticket.id}'
         html_message = render_to_string('notifications/comment_notification.html',
                                         {'comment': instance, 'ticket': ticket})
@@ -46,6 +48,6 @@ def send_comment_notification(sender, instance, created, **kwargs):
             subject,
             plain_message,
             settings.DEFAULT_FROM_EMAIL,
-            [recipient_email, POST_MAIL],
+            recipient_list,
             html_message=html_message
         )
