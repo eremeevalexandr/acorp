@@ -1,4 +1,5 @@
 <p>Новый комментарий к заявке №{{ ticket.id }}</p>
-<p>Статус: {{ ticket.status }}</p>
+<p>Заголовок: {{ ticket.title }}</p>
+<p>Статус: {{ ticket.get_status_display }}</p>
 <p>Автор комментария: {{ comment.user.username }}</p>
 <p>Содержание комментария: {{ comment.content }}</p>

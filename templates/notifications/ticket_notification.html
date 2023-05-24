@@ -1,5 +1,5 @@
 <p>Заявка №{{ ticket.id }} была {{ notification_type }}</p>
-<p>Тема: {{ ticket.title }}</p>
+<p>Заголовок: {{ ticket.title }}</p>
 <p>Создана: {{ ticket.user }}</p>
-<p>Статус: {{ ticket.status }}</p>
+<p>Статус: {{ ticket.get_status_display }}</p>
 <p>Описание: {{ ticket.description }}</p>
