@@ -1,28 +1,37 @@
 {% extends 'base.html' %}
-
+{% load static %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'acorp/helpdesk/ticket.css' %}">
+{% endblock %}
 {% block content %}
-    <h1>{{ ticket.title }}</h1>
-    <p><strong>Статус:</strong> {{ ticket.get_status_display }}</p>
-    <p><strong>Описание:</strong></p>
-    <p>{{ ticket.description }}</p>
-    <p><strong>Дата создания:</strong> {{ ticket.created_at }}</p>
-    <p><strong>Дата обновления:</strong> {{ ticket.updated_at }}</p>
-    <p><a href="{% url 'helpdesk:index' %}">Вернуться к списку заявок</a></p>
-    <h2>Комментарии:</h2>
-    {% for comment in comments %}
-        <div>
-            <p>Автор: {{ comment.user }}</p>
-            <p>Дата: {{ comment.created_at }}</p>
-            <p>{{ comment.content }}</p>
-        </div>
-    {% empty %}
-        <p>Нет комментариев.</p>
-    {% endfor %}
+    <div class="view-ticket">
+        <h1>{{ ticket.title }}</h1>
+        <p><strong>Статус:</strong> {{ ticket.get_status_display }}</p>
+        <p><strong>Описание:</strong></p>
+        <p>{{ ticket.description }}</p>
+        <p><strong>Дата создания:</strong> {{ ticket.created_at }}</p>
+        <p><strong>Дата обновления:</strong> {{ ticket.updated_at }}</p>
+        <p><a href="{% url 'helpdesk:index' %}">Вернуться к списку заявок</a></p>
+        <div class="comment">
+            <h2>Комментарии:</h2>
+            {% for comment in comments %}
+                <div class="comment-view-autor">
+                    <p>{{ comment.user }}({{ comment.created_at }})</p>
+                </div>
+                <div class="comment-view-content"><p>{{ comment.content }}</p></div>
 
-    <h2>Добавить комментарий:</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Добавить</button>
-    </form>
+
+            {% empty %}
+                <p>Нет комментариев.</p>
+            {% endfor %}
+        </div>
+        <h2>Добавить комментарий:</h2>
+        <div class="form-content">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Добавить</button>
+            </form>
+        </div>
+    </div>
 {% endblock %}
