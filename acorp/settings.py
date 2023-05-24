@@ -121,26 +121,35 @@ USE_TZ = True
 ROOT_PATH = os.path.dirname(__file__)
 
 STATIC_URL = 'static/'
-STATICFILES_DIRS = [(os.path.join(BASE_DIR, 'static'))]
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles/')
+
+if DEBUG:
+    # Режим разработки: использование STATICFILES_DIRS
+    STATICFILES_DIRS = [(os.path.join(BASE_DIR, 'static'))]
+else:
+    # Режим продакшна: использование STATIC_ROOT
+    STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-'''Аутентификация через стандартные средства django'''
+# Аутентификация через стандартные средства django
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
-
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
 # email для уведомления пользователей
-EMAIL_BACKEND = EMAIL_BACKEND
+if DEBUG:
+    # Для разработки, вывод в консоль
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+else:
+    # Режим продакшна: настройки в config_app/email_setting.py
+    EMAIL_BACKEND = EMAIL_BACKEND
 EMAIL_HOST = EMAIL_HOST
 EMAIL_PORT = EMAIL_PORT
 EMAIL_HOST_USER = EMAIL_HOST_USER
