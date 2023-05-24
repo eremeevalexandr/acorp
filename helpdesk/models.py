@@ -29,6 +29,7 @@ class Ticket(models.Model):
     comment = models.ForeignKey(
         'helpdesk.Comment',
         null=True,
+        blank=True,
         on_delete=models.CASCADE,
         related_name='comments',
         verbose_name='комментарий'
