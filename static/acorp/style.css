@@ -20,6 +20,10 @@ nav.sidebar ul {
     list-style: none;
 }
 
+nav.sidebar ul p {
+    text-align: center;
+}
+
 nav.sidebar ul li {
     padding: 10px;
 }
@@ -32,6 +36,7 @@ nav.sidebar ul li a {
 .main-content {
     margin-left: 250px;
     padding: 20px;
+    text-align: center;
 }
 
 table {
@@ -102,54 +107,4 @@ button[type="submit"] {
 
 button[type="submit"]:hover {
     background-color: #0066CC;
-}
-
-/*Регистрация и вход*/
-.form-group label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-
-.form-control {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    line-height: 1.5;
-    color: #495057;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #ced4da;
-    border-radius: 0.25rem;
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-}
-
-.form-control:focus {
-    border-color: #80bdff;
-    outline: 0;
-    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-}
-
-.btn-primary {
-    color: #fff;
-    background-color: #007bff;
-    border-color: #007bff;
-    display: block;
-    width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    line-height: 1.5;
-    border-radius: 0.25rem;
-    transition: all 0.2s ease-in-out;
-}
-
-.btn-primary:hover {
-    color: #fff;
-    background-color: #0069d9;
-    border-color: #0062cc;
-}
-
-.form-group[hidden] {
-    display: none;
 }
